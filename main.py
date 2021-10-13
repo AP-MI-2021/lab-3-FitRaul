@@ -2,7 +2,8 @@ def show_menu():
     print("1. Citire lista")
     print("2. Det cea mai lunga secv cu prop ca numerele sunt pare")
     print("3. Det cea mai lunga subsecv cu prop numerele sunt formate din cifre prime")
-    print("4. Exit")
+    print("4. Det cea mai lunga subsecv de palindroame")
+    print("5. Exit")
 
 def read_list():
     lst = []
@@ -63,6 +64,7 @@ def prime_digits(n):
         return 0
     return 1
 
+
 def get_longest_prime_digits(lst):
     """
     determina cea mai lunga subsecv de numere formate din cifre prime
@@ -89,6 +91,48 @@ def test_prime_digits():
     assert prime_digits(68) == False
 
 
+def is_palindrome(n):
+    """
+    determina daca un numar este palindrom
+    """
+    copie=n
+    invers=0
+    while copie!=0:
+        cifra=copie%10
+        invers=invers*10+cifra
+        copie=copie//10
+
+    if invers==n:
+        return 1
+    return 0
+
+
+def get_longest_all_palindromes(lst):
+    """
+    determina cea mai lunga subsecv de palindroame
+    """
+    l = len(lst)
+    result = []
+    for i in range(l):
+        for j in range(i, l):
+            k = is_palindrome(lst[i])
+            all_palindromes = True
+            for num in lst[i:j + 1]:
+                if is_palindrome(num) != k:
+                    all_palindromes = False
+                    break
+            if all_palindromes:
+                if j - i + 1 > len(result):
+                    result = lst[i:j + 1]
+    return result
+
+
+def test_is_palindrome():
+    assert is_palindrome(232) == True
+    assert is_palindrome(24) == False
+    assert is_palindrome(1221) == True
+    assert is_palindrome(1352) == False
+
 
 def main():
     lst=[]
@@ -102,7 +146,9 @@ def main():
         elif opt == 3:
             numar= get_longest_prime_digits(lst)
             print("Cea mai lunga subsecv de nr formate din cifre prime  ", numar)
-        elif opt == 4:
+        elif opt==4:
+            print("Cea mai lunga subsecv de palindroame  este ", get_longest_all_palindromes(lst))
+        elif opt == 5:
             break
         else:
             print("Optiunea invalida")
@@ -110,4 +156,5 @@ def main():
 if __name__ == '__main__':
     test_is_even()
     test_prime_digits()
+    test_is_palindrome
     main ()
