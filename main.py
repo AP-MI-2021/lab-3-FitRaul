@@ -156,5 +156,5 @@ def main():
 if __name__ == '__main__':
     test_is_even()
     test_prime_digits()
-    test_is_palindrome
+    test_is_palindrome()
     main ()
